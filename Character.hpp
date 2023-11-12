@@ -11,9 +11,24 @@ Character.hpp declares the Character class along with its private and public mem
 #include <string>
 #include <cctype>
 
+//includes for task 1 modifications
+#include <queue>
+#include <stack>
+
 enum Race
 {
     NONE, HUMAN, ELF, DWARF, LIZARD, UNDEAD
+};
+
+//task 1 character modifications
+//enum for the different actions
+enum Action {BUFF_Heal, BUFF_MendMetal, ATT_Strike, ATT_ThrowTomato};
+
+//new struct for the buffs
+struct Buff 
+{
+    std::string name_;
+    int turns_; //the number of turns this Buff will last for
 };
 
 class Character
@@ -154,8 +169,89 @@ class Character
         virtual void display() const;
 
 
-  
+        //===========================================================================
+        //task 1 modifications
+        //===========================================================================
+        /** 
+         * BUFF ACTIONS
+         * 
+         * heal 
+         * mendMetal
+         * 
+         * */
         
+        /**
+            @pre: This function is called to execute the Action BUFF_Heal
+            @post: Increases the character's vitality by 2
+        */
+        void heal();
+        
+        /**
+            @pre: This function is called to execute the Action BUFF_MendMetal
+            @post: Increases the character's armor by 2
+        */
+        void mendMental();
+
+
+        /** 
+         * ATTACK ACTIONS
+         * 
+         * strike
+         * throwTomato
+         * 
+         * */
+        
+        /**
+            @pre: This function is called to execute the Action ATT_Strike
+            @param: A pointer to a character target
+            @post: Deals 2 points of damage to the target character. If the target has armor, their armor absorbs the damage but is depleted by the same number of points. For example, if the target has 1 armor point, their armor becomes 0 and they lose 1 vitality point.
+        */
+        void strike(const Character * pCharacter);
+
+        /**
+            @pre: This function is called to  execute the Action ATT_ThrowTomato
+            @param: A pointer to a character target
+            @post: Deals 1 point of damage to the target character. If the target has armor, their armor absorbs the damage but is depleted by the same number of points. For example, if the target has 1 armor point, their armor becomes 0 and they don't lose any vitality points. Your character gains 1 vitality point (as laughter is the best medicine).
+        */
+        void throwTomato(const Character * pCharacter);
+
+        //===========================================================================
+        //task 2 modifications(initial from first doing task 1)
+        //===========================================================================
+        /**
+            @pre: the int is within the enum(return false if not fullfilled)
+            @param: An int reference for the correspoinding added action
+            @post: adds action to the back of the action_queue_
+            @return: if it is added sucessfully
+        */
+        bool addAction(const int &pAction);
+
+        /**
+            @param: reference to the buff being added
+            @post: adds buff to the top of the buff_stack_
+        */
+        void addBuff(const Buff &pBuff);
+
+
+
+        //===========================================================================
+        //Kyle's Test methods
+        //===========================================================================
+        //two methods, one that prints the stack, one that prints the queue
+
+        /**
+            @post: prints the entire stack
+            //using copy constructor for a new stack
+            //transfer all to a vector while popping stack
+            //for loop;
+        */
+        void printBuffStack();
+
+        /**
+            @post: prints the entire queue by using copy constructor for a new stack, then popping all items while printing
+        */
+        void printActionQueue();
+
 
     private:
         //The name of the character (a string in UPPERCASE)
@@ -170,6 +266,19 @@ class Character
         int level_;
         // A flag indicating whether the character is an enemy
         bool enemy_;
+
+
+        //===========================================================================
+        //task 1 modifications
+        //===========================================================================
+
+        //task 1 modifications
+        //An action queue: a queue of integers to store actions a character wants 
+        //to take during their turn (as integers that correspond to the enum Action)
+        std::queue<int> action_queue_;
+
+        //A buff stack: a stack of Buff objects the character can use during their turn
+        std::stack<Buff> buff_stack_;
 
 };
 
