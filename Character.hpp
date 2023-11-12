@@ -206,14 +206,14 @@ class Character
             @param: A pointer to a character target
             @post: Deals 2 points of damage to the target character. If the target has armor, their armor absorbs the damage but is depleted by the same number of points. For example, if the target has 1 armor point, their armor becomes 0 and they lose 1 vitality point.
         */
-        void strike(const Character * pCharacter);
+        void strike(Character * pCharacter);
 
         /**
             @pre: This function is called to  execute the Action ATT_ThrowTomato
             @param: A pointer to a character target
             @post: Deals 1 point of damage to the target character. If the target has armor, their armor absorbs the damage but is depleted by the same number of points. For example, if the target has 1 armor point, their armor becomes 0 and they don't lose any vitality points. Your character gains 1 vitality point (as laughter is the best medicine).
         */
-        void throwTomato(const Character * pCharacter);
+        void throwTomato(Character * pCharacter);
 
         //===========================================================================
         //task 2 modifications(initial from first doing task 1)
@@ -225,6 +225,13 @@ class Character
             @return: if it is added sucessfully
         */
         bool addAction(const int &pAction);
+
+        /**
+            @pre: actionQueue is not empty //may be removed
+            @post: does the action at front of queue, then pops
+            @return: bool if actions was done, will be false when queue empty //may be removed
+        */
+        bool doAction();
 
         /**
             @param: reference to the buff being added

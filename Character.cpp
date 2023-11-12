@@ -274,3 +274,77 @@ void Character::display() const
 }
 
 
+//===========================================================================
+//task 1 modifications
+//===========================================================================
+/** 
+ * BUFF ACTIONS
+ * 
+ * heal 
+ * mendMetal
+ * 
+ * */
+
+/**
+    @pre: This function is called to execute the Action BUFF_Heal
+    @post: Increases the character's vitality by 2
+*/
+void Character::heal()
+{
+    this->setVitality(this->getVitality() + 2);
+}
+
+/**
+    @pre: This function is called to execute the Action BUFF_MendMetal
+    @post: Increases the character's armor by 2
+*/
+void Character::mendMental()
+{
+    this->setArmor(this->getArmor() + 2);
+}
+
+
+/** 
+ * ATTACK ACTIONS
+ * 
+ * strike
+ * throwTomato
+ * 
+ * */
+
+/**
+    @pre: This function is called to execute the Action ATT_Strike
+    @param: A pointer to a character target
+    @post: Deals 2 points of damage to the target character. If the target has armor, their armor absorbs the damage but is depleted by the same number of points. For example, if the target has 1 armor point, their armor becomes 0 and they lose 1 vitality point.
+*/
+void Character::strike(Character * pCharacter)
+{
+    //if the armor is 2 or more then just the armor is affected
+    if(pCharacter->getArmor() >= 2) pCharacter->setArmor(pCharacter->getArmor()-2);
+    else// if it's lower than 2, than the health will be affected as well
+    {
+        //loss of vitality depends on how much armor they have
+        pCharacter->setVitality(pCharacter->getVitality() - (2 - pCharacter->getArmor()));
+
+        //no matter what, armor will become 0 here
+        pCharacter->setArmor(0);
+    }
+}
+
+/**
+    @pre: This function is called to  execute the Action ATT_ThrowTomato
+    @param: A pointer to a character target
+    @post: Deals 1 point of damage to the target character. If the target has armor, their armor absorbs the damage but is depleted by the same number of points. For example, if the target has 1 armor point, their armor becomes 0 and they don't lose any vitality points. Your character gains 1 vitality point (as laughter is the best medicine).
+*/
+void Character::throwTomato(Character * pCharacter)
+{
+    //very similar to last method
+
+    //if the armor is any armor, just armor will be affected
+    //else means no armor, then health only affected
+    if(pCharacter->getArmor() > 0) pCharacter->setArmor(pCharacter->getArmor()-1);
+    else pCharacter->setVitality(pCharacter->getVitality() - 1);
+
+    //always increase health by 1
+    this->setVitality(this->getVitality() + 1);
+}
