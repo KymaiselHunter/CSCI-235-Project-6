@@ -70,6 +70,10 @@ int main()
     actionTestCharacter1->addAction(0);
     actionTestCharacter1->addAction(2);
     actionTestCharacter1->addAction(0);
+
+    //these should not be added
+    actionTestCharacter1->addAction(4);
+    actionTestCharacter1->addAction(-1);
     
     Buff testBuffOne;
     testBuffOne.name_ = "Ballz";
@@ -87,9 +91,27 @@ int main()
     actionTestCharacter2->addBuff(testBuffTwo);
     actionTestCharacter2->addBuff(testBuffThree);
 
-    //std::cou
-    //actionTestCharacter1->printActionQueue();
 
+    //enum Action {BUFF_Heal, BUFF_MendMental, ATT_Strike, ATT_ThrowTomato};
+    //              0           1               2           3
+
+    cout << "Action test" << endl;
+    actionTestCharacter1->printActionQueue();
+    cout << endl;
+
+    cout << "buff test" << endl;
+    actionTestCharacter2->printBuffStack();
+    cout << endl;
+
+    cout << "repeat test(make sure the stack and queue clone didnt mess up)" << endl;
+
+    cout << "Action test 2" << endl;
+    actionTestCharacter1->printActionQueue();
+    cout << endl;
+
+    cout << "buff test 2" << endl;
+    actionTestCharacter2->printBuffStack();
+    cout << endl;
 
 
 }
