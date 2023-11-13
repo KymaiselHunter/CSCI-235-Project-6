@@ -348,3 +348,84 @@ void Character::throwTomato(Character * pCharacter)
     //always increase health by 1
     this->setVitality(this->getVitality() + 1);
 }
+
+//===========================================================================
+//task 2 modifications(initial from first doing task 1)
+//adding stuff to the queues
+//===========================================================================
+/**
+    @pre: the int is within the enum(return false if not fullfilled)
+    @param: An int reference for the correspoinding added action
+    @post: adds action to the back of the action_queue_
+    @return: if it is added sucessfully
+*/
+bool Character::addAction(const int &pAction)
+{
+    //if action int is not in scope, exit
+    if(pAction > 3 || pAction < 0)
+    {
+        return false;
+    }
+
+    action_queue_.push(pAction);
+    return true;
+}
+
+/**
+    @param: reference to the buff being added
+    @post: adds buff to the top of the buff_stack_
+*/
+void Character::addBuff(const Buff &pBuff)
+{
+    buff_stack_.push(pBuff);
+}
+
+//===========================================================================
+//Kyle's Test methods
+//===========================================================================
+//two methods, one that prints the stack, one that prints the queue
+
+/**
+    @post: prints the entire stack by using copy constructor for a new stack, then popping all items while printing
+    //top to bottom
+*/
+void Character::printBuffStack()
+{
+    std::stack<Buff> temp = buff_stack_;
+
+    std::cout << "Buff stack from top to bottom" << std::endl;
+    while(!temp.empty())
+    {
+        std::cout << " Buff: " << temp.top().name_ << " | Turns: " << temp.top().turns_ << std::endl; 
+        temp.pop();
+    }
+    std::cout << "End of buff stack\n" << std::endl;
+}
+
+/**
+    @post: prints the entire queue by using copy constructor for a new queue, then popping all items while printing
+    //front to back
+*/
+void Character::printActionQueue()
+{
+    std::queue<int> temp = action_queue_;
+
+    //enum Action {BUFF_Heal, BUFF_MendMental, ATT_Strike, ATT_ThrowTomato};
+    //              0           1               2           3
+
+    std::cout << "Action Queue from front to back" << std::endl;
+    while(!temp.empty())
+    {
+        std::string tempName = "Out of bounds";
+        if(temp.front() == 0) tempName = "Buff_Heal";
+        else if(temp.front() == 1) tempName = "Buff_MendMental";
+        else if(temp.front() == 2) tempName = "ATT_Strike";
+        else if(temp.front() == 3) tempName = "ATT_ThrowTomato";
+
+        std::cout << "Action Name: " << tempName << " | Action Number: " << temp.front() << std::endl;
+
+        temp.pop();
+    }
+    
+    std::cout << "End of Action Queue\n" << std::endl;
+}

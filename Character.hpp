@@ -22,7 +22,8 @@ enum Race
 
 //task 1 character modifications
 //enum for the different actions
-enum Action {BUFF_Heal, BUFF_MendMetal, ATT_Strike, ATT_ThrowTomato};
+enum Action {BUFF_Heal, BUFF_MendMental, ATT_Strike, ATT_ThrowTomato};
+//              0           1               2           3
 
 //new struct for the buffs
 struct Buff 
@@ -217,6 +218,7 @@ class Character
 
         //===========================================================================
         //task 2 modifications(initial from first doing task 1)
+        //adding stuff to the queues
         //===========================================================================
         /**
             @pre: the int is within the enum(return false if not fullfilled)
@@ -226,12 +228,7 @@ class Character
         */
         bool addAction(const int &pAction);
 
-        /**
-            @pre: actionQueue is not empty //may be removed
-            @post: does the action at front of queue, then pops
-            @return: bool if actions was done, will be false when queue empty //may be removed
-        */
-        bool doAction();
+        
 
         /**
             @param: reference to the buff being added
@@ -239,7 +236,16 @@ class Character
         */
         void addBuff(const Buff &pBuff);
 
-
+        //===========================================================================
+        //task 2 modifications(initial from first doing task 1)
+        //possible stack and queue uses
+        //===========================================================================
+        /**
+            @pre: actionQueue is not empty //may be removed
+            @post: does the action at front of queue, then pops
+            @return: bool if actions was done, will be false when queue empty //may be removed
+        */
+        bool doAction();
 
         //===========================================================================
         //Kyle's Test methods

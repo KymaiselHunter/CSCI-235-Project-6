@@ -58,4 +58,38 @@ int main()
     actionsTestTavern->displayCharacters();
     cout << "\n"; 
 
+    //test the task 1 stack and queue
+    std::cout << "===================================" << std::endl;
+    cout << "Test task 1 : stack and queue(by kyle)" << endl;
+    std::cout << "===================================" << std::endl;
+    //reuse previous characters
+
+    actionTestCharacter1->addAction(3);
+    actionTestCharacter1->addAction(1);
+    actionTestCharacter1->addAction(3);
+    actionTestCharacter1->addAction(0);
+    actionTestCharacter1->addAction(2);
+    actionTestCharacter1->addAction(0);
+    
+    Buff testBuffOne;
+    testBuffOne.name_ = "Ballz";
+    testBuffOne.turns_ = 2;
+
+    Buff testBuffTwo;
+    testBuffTwo.name_ = "Deez";
+    testBuffTwo.turns_ = 3;
+
+    Buff testBuffThree;
+    testBuffThree.name_ = "Nuts";
+    testBuffThree.turns_ = 1;
+
+    actionTestCharacter2->addBuff(testBuffOne);
+    actionTestCharacter2->addBuff(testBuffTwo);
+    actionTestCharacter2->addBuff(testBuffThree);
+
+    //std::cou
+    //actionTestCharacter1->printActionQueue();
+
+
+
 }
