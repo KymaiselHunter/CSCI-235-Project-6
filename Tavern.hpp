@@ -123,11 +123,180 @@ class Tavern : public ArrayBag<Character*>{
     */
     void displayRace(const std::string &race);
 
-   
+    //===========================================================================
+    //task 2 modifications - task 2 public functions
+    //===========================================================================   
+
+    /**
+        @param: a Character pointer 
+        @post: sets the Tavern's main character to the pointer that is given
+    */
+    void setMainCharacter(const Character * pCharacter);
+
+    /**
+      @return: a pointer to the main character in the Tavern, nullptr if there is no main character
+    */
+    Character * getMainCharacter() const;
+
+    /**
+      @param: two Character pointers
+      @return: true if the lhs Character's level is less than the rhs Character's level
+    */
+    bool levelIsLess(const Character * pLeftCharacter, const Character pRightCharacter) const;
+
+    /**
+      @param: two Character pointers
+      @return: true if the lhs Character's level is greater than the rhs Character's level
+    */
+    bool levelIsGreater(const Character * pLeftCharacter, const Character pRightCharacter) const;
+
+    /**
+      @param: two Character pointers
+      @return: true if the lhs Character's vitality is less than the rhs Character's vitality
+    */
+    bool vitalityIsLess(const Character * pLeftCharacter, const Character pRightCharacter) const;
+
+    /**
+      @param: two Character pointers
+      @return: true if the lhs Character's vitality is more than the rhs Character's vitality
+    */
+    bool vitalityIsGreater(const Character * pLeftCharacter, const Character pRightCharacter) const;
+
+    //combat queue stuff
+    //everything else before this are relatively easy and will be used for the follwoing methods
+    //
+
+    /**
+      @pre  : The combat queue should be emptied before the characters are added to the queue
+      @param  : A string reference to a sorting filter with a default value of "NONE"
+      @post   : With default filter "NONE": add every character marked as an enemy to the combat queue
+        : With the filter "LVLASC": add every character in the Tavern marked as an enemy to the combat queue, in ascending order based on their level.
+        : With the filter "LVLDES": add every character in the Tavern marked as an enemy to the combat queue, in descending order based on their level.
+        : With the filter "HPASC": add every character in the Tavern marked as an enemy to the combat queue, in ascending order based on their vitality.
+        : With the filter "HPDES": add every character in the Tavern marked as an enemy to the combat queue, in descending order based on their vitality.
+    */
+    void createCombatQueue(const std::string &pFilter = "NONE");
+
+    /**
+      @post   : returns a pointer to the Character at the front of the Combat Queue. 
+              : If there are no characters in the queue, return nullptr
+    */
+    Character * getTarget() const;
+
+    /**
+      @post : Prints the details of each character in the combat queue in the following form:
+            : [ENEMY NAME]: LEVEL [ENEMY LEVEL] [ENEMY RACE]. \nVITALITY: [ENEMY VITALITY] \nARMOR: [ENEMY ARMOR]\n 
+    */
+    void printCombatQueue() const;
 
 
+    //===========================================================================
+    //task 2 modifications - task 2 combat functions
+    //===========================================================================   
 
 
+    /** 
+     * THE FOLLOWING FUNCTIONS WILL MANAGE THE COMBAT - 
+     * YOU SHOULD CONSIDER HOW THESE WILL AFFECT THE CHARACTERS AND 
+     * WHAT ADDITIONAL MEMBER FUNCTION YOU NEED TO IMPLEMENT IN THE CHARACTER CLASS 
+     * TO SUPPORT THESE ACTIONS 
+     * */
+
+    /** 
+        @post : If there are no enemies in the combat queue, do nothing.
+              : Otherwise do all of the following
+              :     - The action queue must be emptied before the new actions are added.
+              :     - Print out the start of turn and details of the target enemy in the form:
+                      : YOUR TURN\n
+                      : (ENEMY) [ENEMY NAME]: LEVEL [ENEMY LEVEL] [ENEMY RACE]. \nVITALITY: [ENEMY VITALITY] \nARMOR: [ENEMY ARMOR]\n\n 
+    
+              :     - Repeat the following process thrice (i.e. read three actions from input): 
+              :           - Print the actions that are available to the main character, and read 
+                            a non-negative number from input, corresponding to an action. 
+                            Printing the available options should be of the following form. 
+                            You may consider writing a helper function for this.
+                            :Choose an action(1-4):\n1: BUFF_Heal\t\t2: BUFF_MendMetal\t\t3: ATT_Strike\t\t4: ATT_ThrowTomato\n
+              :           - If the input is invalid (valid inputs will be 1,2,3, or 4 only.), 
+                          keep prompting for a non-negative number that is within range, by
+                          printing "Invalid input. Please enter a number between 1 and 4 inclusive.\n" and prompt for input again.
+              :           - When a valid action is read, 
+                          it is added to the main character's action queue.    
+    */
+    void actionSelction();
+
+    /**
+        @post : If there are no actions in the main character's action queue, 
+                or there are no enemies in the combat queue, do nothing.
+                
+                Otherwise do all of the following:            
+                
+                1. If the Buff stack is not empty, apply the buff once and decrement the turns.
+                   Any time a Buff's turns_ goes to zero, it is removed
+                   from the stack. Print out the results of the action as described below.
+                2. While there are actions on the action queue:
+                - take the next action off the queue
+                - if the next action is  a buff, apply once and push it onto the buff stack after 
+                  decrementing the turns. 
+                  BUFF_Heal lasts for 3 turns in total, while BUFF_MendMetal lasts
+                  for 2 turns in total. Print out the results of the action as described below.
+                - if the next action is an attack, execute it against the enemy at the front of
+                  the combat queue. Print out the results of the action as described below. 
+                 - if after this action there are no more enemies to fight, clear the action
+                   queue and return.
+                3. Print "END OF TURN\n" 
+          
+            : More details:
+        
+            : After applying each action, print out the results of the action as follows:
+            : [MAINCHARACTER NAME] used [ACTION NAME]!
+            : \n(YOU) [MAINCHARACTER NAME]: LEVEL [MAINCHARACTER LEVEL] [MAINCHARACTER RACE]. \nVITALITY: [MAINCHARACTER VITALITY] \nARMOR: [MAINCHARACTER ARMOR]\n
+            : \n(ENEMY) [ENEMY NAME]: LEVEL [ENEMY LEVEL] [ENEMY RACE]. \nVITALITY: [ENEMY VITALITY] \nARMOR: [ENEMY ARMOR]\n 
+
+             Where [ACTION NAME] is one of [Heal, MendMetal, Strike, ThrowTomato]
+            
+            :   Whenever an enemy's vitality becomes <=0 after an attack, also print out 
+                "[CHARACTER NAME] DEFEATED\n" 
+                and remove the enemy from the combat queue AND let them exit the tavern. 
+                Then carry out the remaining actions, if any, against the next enemy on the
+                combat queue.
+          
+    */
+    void turnResolution();
+
+
+    /**
+        @param  : A pointer to the enemy
+        @post   : Do all of the following:
+                : 1. If the enemy's buff stack is not empty, apply buff once and decrement the
+                  turns. Any time a Buff's turns_ goes to zero, it is removed
+                  from the stack. Print out the results of the action as described below.
+                : 2. Pick a random Action 
+                    (one of BUFF_Heal, BUFF_MendMetal, ATT_Strike, ATT_ThrowTomato). 
+                : If the selected action is a buff, apply once immediately and add it to the 
+                  enemy's buff stack, performing the necessary turns update. 
+                  Print out the results of the action as described below.
+                : If the selected action is an attack, execute it against the main character.
+                  Print out the results of the action as described below. 
+                : More details:
+                
+                : After applying each action, print out the results of the action as follows:
+                : [ENEMY NAME] used [ACTION NAME]!
+                : \n(ENEMY) [ENEMY NAME]: LEVEL [ENEMY LEVEL] [ENEMY RACE]. \nVITALITY: [ENEMY VITALITY] \nARMOR: [ENEMY ARMOR]\n 
+                : \n(YOU) [MAINCHARACTER NAME]: LEVEL [MAINCHARACTER LEVEL] [MAINCHARACTER RACE]. \nVITALITY: [MAINCHARACTER VITALITY] \nARMOR: [MAINCHARACTER ARMOR]\n
+  */
+  void enemyTurn(Character * pEnemy);
+
+  /**
+        @post : While the main character's vitality is > 0, and there are still enemies 
+                  in the combat queue, do the following:
+              :     - Call actionSelection()
+                    - Call turnResolution()
+                    - Call enemyTurn() with a pointer to the first enemy on combat queue.
+
+              : If the main character's vitality has fallen to 0, print "YOU HAVE PERISHED."
+              : If there are no more enemies in the combat queue, print "NO MORE ENEMIES."
+  */
+  void combat();
 
 
   private:
@@ -139,8 +308,16 @@ class Tavern : public ArrayBag<Character*>{
     */
     void emptyTavern();
 
-    
+    //===========================================================================
+    //task 2 modifications - member variables
+    //===========================================================================
 
+    //task 2 modifications
+    //A pointer to a main character.
+    Character * main_character_;
+
+    //A combat queue of Character pointers, enemies that the main character must fight.
+    std::queue<Character*> combat_queue_;
 
 };
 #endif
