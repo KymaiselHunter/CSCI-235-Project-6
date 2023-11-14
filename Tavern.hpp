@@ -131,7 +131,7 @@ class Tavern : public ArrayBag<Character*>{
         @param: a Character pointer 
         @post: sets the Tavern's main character to the pointer that is given
     */
-    void setMainCharacter(const Character * pCharacter);
+    void setMainCharacter(Character * pCharacter);
 
     /**
       @return: a pointer to the main character in the Tavern, nullptr if there is no main character
@@ -142,25 +142,25 @@ class Tavern : public ArrayBag<Character*>{
       @param: two Character pointers
       @return: true if the lhs Character's level is less than the rhs Character's level
     */
-    bool levelIsLess(const Character * pLeftCharacter, const Character pRightCharacter) const;
+    bool levelIsLess(const Character * pLeftCharacter, const Character * pRightCharacter) const;
 
     /**
       @param: two Character pointers
       @return: true if the lhs Character's level is greater than the rhs Character's level
     */
-    bool levelIsGreater(const Character * pLeftCharacter, const Character pRightCharacter) const;
+    bool levelIsGreater(const Character * pLeftCharacter, const Character * pRightCharacter) const;
 
     /**
       @param: two Character pointers
       @return: true if the lhs Character's vitality is less than the rhs Character's vitality
     */
-    bool vitalityIsLess(const Character * pLeftCharacter, const Character pRightCharacter) const;
+    bool vitalityIsLess(const Character * pLeftCharacter, const Character * pRightCharacter) const;
 
     /**
       @param: two Character pointers
       @return: true if the lhs Character's vitality is more than the rhs Character's vitality
     */
-    bool vitalityIsGreater(const Character * pLeftCharacter, const Character pRightCharacter) const;
+    bool vitalityIsGreater(const Character * pLeftCharacter, const Character * pRightCharacter) const;
 
     //combat queue stuff
     //everything else before this are relatively easy and will be used for the follwoing methods

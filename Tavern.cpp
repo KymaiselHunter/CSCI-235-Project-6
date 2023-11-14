@@ -242,3 +242,65 @@ void Tavern::emptyTavern()
   }
   item_count_ = 0;
 }
+
+
+//===========================================================================
+//task 2 modifications - task 2 public functions
+//===========================================================================   
+
+/**
+    @param: a Character pointer 
+    @post: sets the Tavern's main character to the pointer that is given
+*/
+void Tavern::setMainCharacter(Character * pCharacter)
+{
+  main_character_ = pCharacter;
+}
+
+/**
+  @return: a pointer to the main character in the Tavern, nullptr if there is no main character
+*/
+Character * Tavern::getMainCharacter() const
+{
+  return main_character_;
+}
+
+/**
+  @param: two Character pointers
+  @return: true if the lhs Character's level is less than the rhs Character's level
+*/
+bool Tavern::levelIsLess(const Character * pLeftCharacter, const Character * pRightCharacter) const
+{
+  if(pLeftCharacter->getLevel() < pRightCharacter->getLevel()) return true;
+  else return false;
+}
+
+/**
+  @param: two Character pointers
+  @return: true if the lhs Character's level is greater than the rhs Character's level
+*/
+bool Tavern::levelIsGreater(const Character * pLeftCharacter, const Character * pRightCharacter) const
+{
+  if(pLeftCharacter->getLevel() > pRightCharacter->getLevel()) return true;
+  else return false;
+}
+
+/**
+  @param: two Character pointers
+  @return: true if the lhs Character's vitality is less than the rhs Character's vitality
+*/
+bool Tavern::vitalityIsLess(const Character * pLeftCharacter, const Character * pRightCharacter) const
+{
+  if(pLeftCharacter->getVitality() < pRightCharacter->getVitality()) return true;
+  else return false;
+}
+
+/**
+  @param: two Character pointers
+  @return: true if the lhs Character's vitality is more than the rhs Character's vitality
+*/
+bool Tavern::vitalityIsGreater(const Character * pLeftCharacter, const Character * pRightCharacter) const
+{
+  if(pLeftCharacter->getVitality() > pRightCharacter->getVitality()) return true;
+  else return false;
+}

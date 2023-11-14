@@ -118,9 +118,69 @@ int main()
     //task 2 modifications
     //===========================================================================
 
-    //test the task 2 -----
+    //test the task 2 simple comparisons, setters and getters
     std::cout << "===================================" << std::endl;
-    cout << "Test task 2 : -----" << endl;
+    cout << "Test task 2 : simple comparisons, setters and getters" << endl;
     std::cout << "===================================" << std::endl;
+
+    //list of shit to test
+    /*
+
+    void setMainCharacter(Character * pCharacter);
+    Character * getMainCharacter() const;
+    
+    bool levelIsLess(const Character * pLeftCharacter, const Character * pRightCharacter) const;
+    bool levelIsGreater(const Character * pLeftCharacter, const Character * pRightCharacter) const;
+    bool vitalityIsLess(const Character * pLeftCharacter, const Character * pRightCharacter) const;
+    bool vitalityIsGreater(const Character * pLeftCharacter, const Character * pRightCharacter) const;
+    
+    */
+
+    Tavern * simpleTestTavern = new Tavern();
+
+    //Character(const std::string& name, const std::string& race, int vitality = 0, int armor = 0, int level = 0, bool enemy = false);
+
+    //greater dude
+    Character * simpleTestCharacterOne = new Character("simpOne", "HUMAN", 5, 5, 5, false);
+    
+    //less dude
+    Character * simpleTestCharacterTwo = new Character("simpTwo", "HUMAN", 1, 1, 1, false);
+
+    simpleTestTavern->enterTavern(simpleTestCharacterOne);
+    simpleTestTavern->enterTavern(simpleTestCharacterTwo);
+
+    simpleTestTavern->setMainCharacter(simpleTestCharacterOne);
+    cout << "Main Character is: " << endl;
+    simpleTestTavern->getMainCharacter()->display();    
+    cout << endl;
+
+    simpleTestTavern->setMainCharacter(simpleTestCharacterTwo);
+    cout << "Main Character is: " << endl;
+    simpleTestTavern->getMainCharacter()->display();    
+    cout << endl;
+
+    //main character setter and getter good, now test the comparison functions
+
+    //all outputs should be true, false
+    cout << "Level Is Less:" << endl;
+    cout << simpleTestTavern->levelIsLess(simpleTestCharacterTwo, simpleTestCharacterOne) << endl;
+    cout << simpleTestTavern->levelIsLess(simpleTestCharacterOne, simpleTestCharacterTwo) << endl;
+    cout << endl;
+
+    cout << "Level Is Greater:" << endl;
+    cout << simpleTestTavern->levelIsGreater(simpleTestCharacterOne, simpleTestCharacterTwo) << endl;
+    cout << simpleTestTavern->levelIsGreater(simpleTestCharacterTwo, simpleTestCharacterOne)<< endl;
+    cout << endl;
+
+    cout << "vitality Is Less:" << endl;
+    cout << simpleTestTavern->vitalityIsLess(simpleTestCharacterTwo, simpleTestCharacterOne) << endl;
+    cout << simpleTestTavern->vitalityIsLess(simpleTestCharacterOne, simpleTestCharacterTwo) << endl;
+    cout << endl;
+
+    cout << "Level Is Greater:" << endl;
+    cout << simpleTestTavern->vitalityIsGreater(simpleTestCharacterOne, simpleTestCharacterTwo) << endl;
+    cout << simpleTestTavern->vitalityIsGreater(simpleTestCharacterTwo, simpleTestCharacterOne) << endl;
+    cout << endl;
+
 
 }
