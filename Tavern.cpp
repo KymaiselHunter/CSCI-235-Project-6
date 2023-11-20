@@ -360,14 +360,14 @@ void Tavern::createCombatQueue(const std::string &pFilter)
   {
     std::sort(enemyArray.begin(), enemyArray.end(), [this](const Character * pLeftCharacter, const Character * pRightCharacter)
     {
-        return this->vitalityIsGreater(pLeftCharacter, pRightCharacter);
+        return this->vitalityIsLess(pLeftCharacter, pRightCharacter);
     });
   }
   else if(pFilter == "HPDES")
   {
     std::sort(enemyArray.begin(), enemyArray.end(), [this](const Character * pLeftCharacter, const Character * pRightCharacter)
     {
-        return this->vitalityIsLess(pLeftCharacter, pRightCharacter);
+        return this->vitalityIsGreater(pLeftCharacter, pRightCharacter);
     });
   }
 

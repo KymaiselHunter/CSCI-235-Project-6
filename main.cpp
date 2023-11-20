@@ -187,7 +187,60 @@ int main()
     //task 2 modifications - task 2 combat queue creation
     //===========================================================================   
 
+    //test the task 2 simple comparisons, setters and getters
+    std::cout << "===================================" << std::endl;
+    cout << "Test task 2 : task 2 combat queue creation" << endl;
+    std::cout << "===================================" << std::endl;
+
     //test using the enemeis csv
 
     Tavern * actionQueueTestTavern = new Tavern("enemies.csv");
+
+    //check to see if the param construct worked
+    cout << "Original characters in this tavern" << endl;
+    actionQueueTestTavern->displayCharacters();
+    cout << endl;
+
+    //now lets test creating the combat queue
+    //first lets print just to double check that it's empty
+    cout << "Combat Queue should be empty" << endl;
+    actionQueueTestTavern->printCombatQueue();
+    cout << endl;
+
+    std::cout << "===================================" << std::endl;
+    //now we create combat queue
+    cout << "Combat queue creation and default filter" << endl;
+
+    actionQueueTestTavern->createCombatQueue();
+    actionQueueTestTavern->printCombatQueue();
+    cout << endl;
+
+    cout << "print the same queue again to make sure nothing has changed and the print isnt deleting the queue" << endl;
+    actionQueueTestTavern->printCombatQueue();
+    cout << endl;
+
+    std::cout << "===================================" << std::endl;
+    cout << "Test task 2 : task 2 combat filters" << endl;
+    std::cout << "===================================" << std::endl;
+
+    //lvl asc
+    cout << "Level asscend" << endl;
+    actionQueueTestTavern->createCombatQueue("LVLASC");
+    actionQueueTestTavern->printCombatQueue();
+    cout << endl;
+
+    cout << "Level descend" << endl;
+    actionQueueTestTavern->createCombatQueue("LVLDES");
+    actionQueueTestTavern->printCombatQueue();
+    cout << endl;
+
+    cout << "HP asscend" << endl;
+    actionQueueTestTavern->createCombatQueue("HPASC");
+    actionQueueTestTavern->printCombatQueue();
+    cout << endl;
+
+    cout << "HP descend" << endl;
+    actionQueueTestTavern->createCombatQueue("HPDES");
+    actionQueueTestTavern->printCombatQueue();
+    cout << endl;
 }
