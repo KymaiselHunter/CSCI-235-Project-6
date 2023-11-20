@@ -326,7 +326,7 @@ bool Tavern::vitalityIsGreater(const Character * pLeftCharacter, const Character
     : With the filter "HPASC": add every character in the Tavern marked as an enemy to the combat queue, in ascending order based on their vitality.
     : With the filter "HPDES": add every character in the Tavern marked as an enemy to the combat queue, in descending order based on their vitality.
 */
-void Tavern::createCombatQueue(const std::string &pFilter = "NONE")
+void Tavern::createCombatQueue(const std::string &pFilter)
 {
   while(!combat_queue_.empty())
   {

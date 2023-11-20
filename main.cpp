@@ -187,5 +187,7 @@ int main()
     //task 2 modifications - task 2 combat queue creation
     //===========================================================================   
 
-    
+    //test using the enemeis csv
+
+    Tavern * actionQueueTestTavern = new Tavern("enemies.csv");
 }
