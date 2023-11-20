@@ -226,21 +226,41 @@ int main()
     //lvl asc
     cout << "Level asscend" << endl;
     actionQueueTestTavern->createCombatQueue("LVLASC");
+    //
+    cout << "Top: ";
+    actionQueueTestTavern->getTarget()->display();
+    cout << "\n" << endl; 
+    //
     actionQueueTestTavern->printCombatQueue();
     cout << endl;
 
     cout << "Level descend" << endl;
     actionQueueTestTavern->createCombatQueue("LVLDES");
+    //
+    cout << "Top: ";
+    actionQueueTestTavern->getTarget()->display();
+    cout << "\n" << endl; 
+    //
     actionQueueTestTavern->printCombatQueue();
     cout << endl;
 
     cout << "HP asscend" << endl;
     actionQueueTestTavern->createCombatQueue("HPASC");
+    //
+    cout << "Top: ";
+    actionQueueTestTavern->getTarget()->display();
+    cout << "\n" << endl; 
+    //
     actionQueueTestTavern->printCombatQueue();
     cout << endl;
 
     cout << "HP descend" << endl;
     actionQueueTestTavern->createCombatQueue("HPDES");
+    //
+    cout << "Top: ";
+    actionQueueTestTavern->getTarget()->display();
+    cout << "\n" << endl; 
+    //
     actionQueueTestTavern->printCombatQueue();
     cout << endl;
 }
