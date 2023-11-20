@@ -386,6 +386,7 @@ void Tavern::createCombatQueue(const std::string &pFilter)
 */
 Character * Tavern::getTarget() const
 {
+  if(combat_queue_.empty()) return nullptr;
   return combat_queue_.front();
 }
 
@@ -408,4 +409,82 @@ void Tavern::printCombatQueue() const
   }
   
   //std::cout << "End of Action Queue\n" << std::endl;
+}
+
+ //===========================================================================
+//task 2 modifications - task 2 combat functions
+//===========================================================================   
+
+
+/** 
+ * THE FOLLOWING FUNCTIONS WILL MANAGE THE COMBAT - 
+ * YOU SHOULD CONSIDER HOW THESE WILL AFFECT THE CHARACTERS AND 
+ * WHAT ADDITIONAL MEMBER FUNCTION YOU NEED TO IMPLEMENT IN THE CHARACTER CLASS 
+ * TO SUPPORT THESE ACTIONS 
+ * */
+
+/** 
+    @post : If there are no enemies in the combat queue, do nothing.
+          : Otherwise do all of the following
+          :     - The action queue must be emptied before the new actions are added.
+          :     - Print out the start of turn and details of the target enemy in the form:
+                  : YOUR TURN\n
+                  : (ENEMY) [ENEMY NAME]: LEVEL [ENEMY LEVEL] [ENEMY RACE]. \nVITALITY: [ENEMY VITALITY] \nARMOR: [ENEMY ARMOR]\n\n 
+
+          :     - Repeat the following process thrice (i.e. read three actions from input): 
+          :           - Print the actions that are available to the main character, and read 
+                        a non-negative number from input, corresponding to an action. 
+                        Printing the available options should be of the following form. 
+                        You may consider writing a helper function for this.
+                        :Choose an action(1-4):\n1: BUFF_Heal\t\t2: BUFF_MendMetal\t\t3: ATT_Strike\t\t4: ATT_ThrowTomato\n
+          :           - If the input is invalid (valid inputs will be 1,2,3, or 4 only.), 
+                      keep prompting for a non-negative number that is within range, by
+                      printing "Invalid input. Please enter a number between 1 and 4 inclusive.\n" and prompt for input again.
+          :           - When a valid action is read, 
+                      it is added to the main character's action queue.    
+*/
+void Tavern::actionSelction()
+{
+  if(combat_queue_.empty() || this->getMainCharacter() == nullptr) return;
+
+  Character * main = this->getMainCharacter();
+  Character * enemy = combat_queue_.front();
+
+  main->clearActionQueue();
+
+  std::cout << "YOUR TURN" << std::endl;
+  std::cout << "(ENEMY) " << enemy->getName() << ": LEVEL " << enemy->getLevel() << " " << enemy->getRace() << "." << std::endl;
+  std::cout << "VITALITY: " << enemy->getVitality() << "\nARMOR: " << enemy->getArmor() << "\n" << std::endl;
+
+  for(int i = 0; i < 3; i++)
+  {
+    std::string actionNum;
+
+    std::cout << "Choose an action(1-4):\n1: BUFF_Heal\t\t2: BUFF_MendMetal\t\t3: ATT_Strike\t\t4: ATT_ThrowTomato\n";
+    try
+    {
+      std::cin >> actionNum;
+      if(stoi(actionNum) < 1 || stoi(actionNum) > 4) throw 404;//not found
+      main->addAction(stoi(actionNum)-1);
+    }
+    catch(...)
+    {
+      actionNum = "-1";
+      while(stoi(actionNum) < 1 || stoi(actionNum) > 4)
+      {
+        std::cout << "Invalid input. Please enter a number between 1 and 4 inclusive.\n";
+        try
+        {
+          std::cin >> actionNum;
+          if(stoi(actionNum) < 1 || stoi(actionNum) > 4) throw 404;//not found
+          main->addAction(stoi(actionNum)-1);
+        }
+        catch(...)
+        {
+          actionNum = "-1";
+          continue;
+        }
+      }
+    } 
+  }
 }

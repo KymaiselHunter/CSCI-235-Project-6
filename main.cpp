@@ -263,4 +263,24 @@ int main()
     //
     actionQueueTestTavern->printCombatQueue();
     cout << endl;
+
+    std::cout << "===================================" << std::endl;
+    cout << "Test task 2 : action selection" << endl;
+    std::cout << "===================================" << std::endl;
+
+    cout << "add a new Main character" << endl;
+
+    Character * combatTestCharacter = new Character("KYLE", "HUMAN", 100, 100, 100, false);
+    actionQueueTestTavern->add(combatTestCharacter);
+    actionQueueTestTavern->setMainCharacter(combatTestCharacter);
+
+    actionQueueTestTavern->getMainCharacter()->display();
+    cout << endl;
+
+    actionQueueTestTavern->actionSelction();
+
+    cout << "\nCheck that the main character now has those actions" << endl;
+    actionQueueTestTavern->getMainCharacter()->printActionQueue();
+    
+    
 }

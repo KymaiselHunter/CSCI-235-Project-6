@@ -429,3 +429,17 @@ void Character::printActionQueue()
     
     std::cout << "End of Action Queue\n" << std::endl;
 }
+
+//===========================================================================
+//task 2 modifications (while doing task 2)
+//===========================================================================
+/**
+    @post: remove all  the actions in the action_queue_
+*/
+void Character::clearActionQueue()
+{
+    while(!action_queue_.empty())
+    {
+        action_queue_.pop();
+    }
+}

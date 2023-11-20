@@ -248,6 +248,14 @@ class Character
         bool doAction();
 
         //===========================================================================
+        //task 2 modifications (while doing task 2)
+        //===========================================================================
+        /**
+            @post: remove all  the actions in the action_queue_
+        */
+        void clearActionQueue();
+
+        //===========================================================================
         //Kyle's Test methods
         //===========================================================================
         //two methods, one that prints the stack, one that prints the queue
