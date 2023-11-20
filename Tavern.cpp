@@ -304,3 +304,108 @@ bool Tavern::vitalityIsGreater(const Character * pLeftCharacter, const Character
   if(pLeftCharacter->getVitality() > pRightCharacter->getVitality()) return true;
   else return false;
 }
+
+
+
+//===========================================================================
+//task 2 modifications - task 2 combat queue creation
+//===========================================================================   
+
+//combat queue stuff
+//everything else before this are relatively easy and will be used for the follwoing methods
+//
+
+#include <algorithm>
+
+/**
+  @pre  : The combat queue should be emptied before the characters are added to the queue
+  @param  : A string reference to a sorting filter with a default value of "NONE"
+  @post   : With default filter "NONE": add every character marked as an enemy to the combat queue
+    : With the filter "LVLASC": add every character in the Tavern marked as an enemy to the combat queue, in ascending order based on their level.
+    : With the filter "LVLDES": add every character in the Tavern marked as an enemy to the combat queue, in descending order based on their level.
+    : With the filter "HPASC": add every character in the Tavern marked as an enemy to the combat queue, in ascending order based on their vitality.
+    : With the filter "HPDES": add every character in the Tavern marked as an enemy to the combat queue, in descending order based on their vitality.
+*/
+void Tavern::createCombatQueue(const std::string &pFilter = "NONE")
+{
+  while(!combat_queue_.empty())
+  {
+    combat_queue_.pop();
+  }
+
+  //temp enemy Array to retrieve all enemies from tavern to later sort
+  std::vector<Character*> enemyArray;
+  for(int i = 0; i < item_count_; i++)
+  {
+    if(items_[i]->isEnemy()) enemyArray.push_back(items_[i]);  
+    if(enemyArray.size() == this->num_enemies_) break;
+  }
+
+  //sort based on filter, if not any of these, do not sort
+  if(pFilter == "LVLASC")
+  {
+    std::sort(enemyArray.begin(), enemyArray.end(), [this](const Character * pLeftCharacter, const Character * pRightCharacter)
+    {
+        return this->levelIsLess(pLeftCharacter, pRightCharacter);
+    });
+  }
+  else if(pFilter == "LVLDES")
+  {
+    std::sort(enemyArray.begin(), enemyArray.end(), [this](const Character * pLeftCharacter, const Character * pRightCharacter)
+    {
+        return this->levelIsGreater(pLeftCharacter, pRightCharacter);
+    });
+  }
+  else if(pFilter == "HPASC")
+  {
+    std::sort(enemyArray.begin(), enemyArray.end(), [this](const Character * pLeftCharacter, const Character * pRightCharacter)
+    {
+        return this->vitalityIsGreater(pLeftCharacter, pRightCharacter);
+    });
+  }
+  else if(pFilter == "HPDES")
+  {
+    std::sort(enemyArray.begin(), enemyArray.end(), [this](const Character * pLeftCharacter, const Character * pRightCharacter)
+    {
+        return this->vitalityIsLess(pLeftCharacter, pRightCharacter);
+    });
+  }
+
+  //push the sorted array elements to the queue
+  for(int i = 0; i < enemyArray.size(); i++)
+  {
+    combat_queue_.push(enemyArray[i]);
+  }
+  
+
+}
+
+/**
+  @post   : returns a pointer to the Character at the front of the Combat Queue. 
+          : If there are no characters in the queue, return nullptr
+*/
+Character * Tavern::getTarget() const
+{
+  return combat_queue_.front();
+}
+
+/**
+  @post : Prints the details of each character in the combat queue in the following form:
+        : [ENEMY NAME]: LEVEL [ENEMY LEVEL] [ENEMY RACE]. \nVITALITY: [ENEMY VITALITY] \nARMOR: [ENEMY ARMOR]\n 
+*/
+void Tavern::printCombatQueue() const
+{
+  //steal code from my print character action queue
+
+  std::queue<Character *> temp = combat_queue_;
+
+  //std::cout << "Action Queue from front to back" << std::endl;
+  while(!temp.empty())
+  {
+      temp.front()->display();
+
+      temp.pop();
+  }
+  
+  //std::cout << "End of Action Queue\n" << std::endl;
+}
