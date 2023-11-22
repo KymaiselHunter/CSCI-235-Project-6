@@ -287,13 +287,21 @@ int main()
     combatTestCharacter->printBuffStack();
 
     Buff testBuff;
-    testBuff.name_ = "BUFF_Heal";
+    testBuff.name_ = "Heal";
     testBuff.turns_ = 2;
 
     combatTestCharacter->addBuff(testBuff);
     combatTestCharacter->printBuffStack();
 
-    actionQueueTestTavern->turnResolution();
+    // cout << "\ntest that action selection works in tandom with turn resolution along with the previous added buff" << endl;
+
+    // actionQueueTestTavern->actionSelection();
+    // actionQueueTestTavern->turnResolution();
+
+    // actionQueueTestTavern->actionSelection();
+    // actionQueueTestTavern->turnResolution();
+
+    // //actionQueueTestTavern->printCombatQueue();
     
     
 }

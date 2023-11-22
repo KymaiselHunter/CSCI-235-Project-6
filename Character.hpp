@@ -233,17 +233,6 @@ class Character
             @post: adds buff to the top of the buff_stack_
         */
         void addBuff(const Buff &pBuff);
-
-        //===========================================================================
-        //task 2 modifications(initial from first doing task 1)
-        //possible stack and queue uses
-        //===========================================================================
-        /**
-            @pre: actionQueue is not empty //may be removed
-            @post: does the action at front of queue, then pops
-            @return: bool if actions was done, will be false when queue empty //may be removed
-        */
-        bool doAction();
         
         //===========================================================================
         //task 2 modifications (while doing task 2)
@@ -262,12 +251,29 @@ class Character
         /**
             @return : bool if Buff stack is empty or not
         */
-        bool isBuffStackEmpty();
+        bool isBuffStackEmpty() const;
 
         /**
             @return : bool if action_queue_ is empty
         */
-        bool isActionQueueEmpty();
+        bool isActionQueueEmpty() const;
+
+        /**
+            @param bool if the character is a mainCharacter, if not, it's an enemy
+            @post     : displays Character data in the form:
+            \n(YOU) [MAINCHARACTER NAME]: LEVEL [MAINCHARACTER LEVEL] [MAINCHARACTER RACE]. \nVITALITY: [MAINCHARACTER VITALITY] \nARMOR: [MAINCHARACTER ARMOR]\n
+            OR
+            \n(ENEMY) [ENEMY NAME]: LEVEL [ENEMY LEVEL] [ENEMY RACE]. \nVITALITY: [ENEMY VITALITY] \nARMOR: [ENEMY ARMOR]\n 
+        */
+        void combatDisplay(bool pIsMain = false) const;
+
+        /**
+            @pre: actionQueue is not empty //may be removed
+            @param: pointer to current enemy
+            @post: does the action at front of queue, then pops
+            @return: string of the name of the action //may be removed
+        */
+        std::string doAction(Character * pVictim);
 
 
         //===========================================================================
@@ -281,12 +287,12 @@ class Character
             //transfer all to a vector while popping stack
             //for loop;
         */
-        void printBuffStack();
+        void printBuffStack() const;
 
         /**
             @post: prints the entire queue by using copy constructor for a new stack, then popping all items while printing
         */
-        void printActionQueue();
+        void printActionQueue() const;
 
 
     private:

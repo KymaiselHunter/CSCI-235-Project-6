@@ -321,13 +321,25 @@ void Character::strike(Character * pCharacter)
 {
     //if the armor is 2 or more then just the armor is affected
     if(pCharacter->getArmor() >= 2) pCharacter->setArmor(pCharacter->getArmor()-2);
-    else// if it's lower than 2, than the health will be affected as well
+    else if(pCharacter->getArmor() == 1)// if it's 1, 1 damage to vit, 1 to health
     {
-        //loss of vitality depends on how much armor they have
-        pCharacter->setVitality(pCharacter->getVitality() - (2 - pCharacter->getArmor()));
-
         //no matter what, armor will become 0 here
         pCharacter->setArmor(0);
+
+        //loss of vitality depends on how much armor they have
+        pCharacter->setVitality(pCharacter->getVitality() - 1);
+    }
+    else // no armor
+    {
+        //if it's less than or equal to 2, they will die
+        if(pCharacter->getVitality() <= 2) 
+        {
+            pCharacter->setVitality(0);
+            return;
+        }
+        
+        //loss of vitality will always be -2 if no armor and they didnt die
+        pCharacter->setVitality(pCharacter->getVitality() - 2);
     }
 }
 
@@ -389,7 +401,7 @@ void Character::addBuff(const Buff &pBuff)
     @post: prints the entire stack by using copy constructor for a new stack, then popping all items while printing
     //top to bottom
 */
-void Character::printBuffStack()
+void Character::printBuffStack() const
 {
     std::stack<Buff> temp = buff_stack_;
 
@@ -406,7 +418,7 @@ void Character::printBuffStack()
     @post: prints the entire queue by using copy constructor for a new queue, then popping all items while printing
     //front to back
 */
-void Character::printActionQueue()
+void Character::printActionQueue() const
 {
     std::queue<int> temp = action_queue_;
 
@@ -455,8 +467,8 @@ std::string Character::applyBuff()
 
     std::string buffName = buff_stack_.top().name_;
 
-    if(buff_stack_.top().name_ == "BUFF_Heal") this->heal();
-    else if(buff_stack_.top().name_ == "BUFF_MendMeta") this->mendMetal();
+    if(buff_stack_.top().name_ == "Heal") this->heal();
+    else if(buff_stack_.top().name_ == "MendMetal") this->mendMetal();
 
     buff_stack_.top().turns_--;
     if(buff_stack_.top().turns_ <= 0) buff_stack_.pop();
@@ -467,7 +479,7 @@ std::string Character::applyBuff()
 /**
     @return : bool if Buff stack is empty or not
 */
-bool Character::isBuffStackEmpty()
+bool Character::isBuffStackEmpty() const
 {
     return buff_stack_.empty();
 }
@@ -475,7 +487,71 @@ bool Character::isBuffStackEmpty()
 /**
     @return : bool if action_queue_ is empty
 */
-bool Character::isActionQueueEmpty()
+bool Character::isActionQueueEmpty() const
 {
-    return isActionQueueEmpty();
+    return action_queue_.empty();
 }
+
+/**
+    @param bool if the character is a mainCharacter, if not, it's an enemy
+    @post     : displays Character data in the form:
+    \n(YOU) [MAINCHARACTER NAME]: LEVEL [MAINCHARACTER LEVEL] [MAINCHARACTER RACE]. \nVITALITY: [MAINCHARACTER VITALITY] \nARMOR: [MAINCHARACTER ARMOR]\n
+    OR
+    \n(ENEMY) [ENEMY NAME]: LEVEL [ENEMY LEVEL] [ENEMY RACE]. \nVITALITY: [ENEMY VITALITY] \nARMOR: [ENEMY ARMOR]\n 
+*/
+void Character::combatDisplay(bool pIsMain) const
+{
+    std::cout << (pIsMain ? "(You) " : "(ENEMY) ") << this->getName() <<" LEVEL "<< this->getLevel()<<" "<< this->getRace() <<
+    ". \nVITALITY: "<< this->getVitality() << "\nARMOR: "<<this->getArmor() << std::endl;
+}
+
+/**
+    @pre: actionQueue is not empty //may be removed
+    @param: pointer to current enemy
+    @post: does the action at front of queue, then pops
+    @return: string of the name of the action //may be removed
+*/
+std::string Character::doAction(Character * pVictim)
+{
+    if(this->isActionQueueEmpty()) return "NULL_ACTION";
+
+    int currentAction = action_queue_.front();
+    action_queue_.pop();
+    
+    if(currentAction == BUFF_Heal || currentAction == BUFF_MendMental)
+    {
+        Buff newBuff;
+
+        if(currentAction == BUFF_Heal)
+        {
+            newBuff.name_ = "Heal";
+            newBuff.turns_ = 3;
+        }
+        else //elif mend mental
+        {
+            newBuff.name_ = "MendMental";
+            newBuff.turns_ = 2;
+        }
+
+        return applyBuff();
+    }
+    else if(currentAction == ATT_Strike || currentAction == ATT_ThrowTomato)
+    {
+        if(pVictim == nullptr) return "ATT_NULL"; 
+
+        if(currentAction == ATT_Strike)
+        {
+            this->strike(pVictim);
+            return "Strike";
+        }
+        //else trow tomat
+        this->throwTomato(pVictim);
+        return "ThrowTomato";
+    }
+    else return "NULL_ACTION";
+}
+
+// //task 1 character modifications
+// //enum for the different actions
+// enum Action {BUFF_Heal, BUFF_MendMental, ATT_Strike, ATT_ThrowTomato};
+// //              0           1   

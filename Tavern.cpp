@@ -403,7 +403,7 @@ void Tavern::printCombatQueue() const
   //std::cout << "Action Queue from front to back" << std::endl;
   while(!temp.empty())
   {
-      temp.front()->display();
+      temp.front()->combatDisplay();
 
       temp.pop();
   }
@@ -536,7 +536,27 @@ void Tavern::turnResolution()
     printTurnResults(main, enemy, main->applyBuff());
   }
 
-  //while(!main->isActionQueueEmpty)
+  while(!main->isActionQueueEmpty())
+  {
+    printTurnResults(main, enemy, main->doAction(enemy));
+      
+
+    if(enemy->getVitality() <= 0)
+    {
+      std::cout << enemy->getName() << " DEFEATED" << std::endl;
+
+      //should i be deleting enemy before having them exit?
+      this->exitTavern(enemy);
+      combat_queue_.pop();
+
+      //new enemy is the next guy at the front
+      if(combat_queue_.empty()) break;
+
+      enemy = combat_queue_.front();
+    }
+  }
+
+  std::cout << "END OF YOUR TURN" << std::endl;
 }
 
 //helper to turn resolution
@@ -548,19 +568,59 @@ void Tavern::printTurnResults(Character * pAttacker, Character * pVictim, std::s
 {
   std::cout << pAttacker->getName() << " used " << pAction << "!" << std::endl;
 
-  std::string attackerName = "(YOU)";
-  std::string victimName = "(ENEMY)";
+  bool mainAttack = false;
 
-  if(pAttacker != this->getMainCharacter())
+  if(pAttacker == this->getMainCharacter())
   {
-    attackerName = "(ENEMY)";
-    victimName =  "(YOU)";
+    mainAttack = true;
   }
 
-  std::cout << attackerName << " " << pAttacker->getName() <<" LEVEL "<< pAttacker->getLevel()<<" "<< pAttacker->getRace() <<
-  ". \nVITALITY: "<< pAttacker->getVitality() << "\nARMOR: "<<pAttacker->getArmor() <<"\n" << std::endl;
-
-  std::cout << victimName << " " << pVictim->getName() <<" LEVEL "<< pVictim->getLevel()<<" "<< pVictim->getRace() <<
-  ". \nVITALITY: "<< pVictim->getVitality() << "\nARMOR: "<<pVictim->getArmor() << "\n" << std::endl;
+  pAttacker->combatDisplay(mainAttack);
+  std::cout << std::endl;
+  pVictim->combatDisplay(!mainAttack);
+  std::cout << std::endl;
 
 }
+
+/**
+    @param  : A pointer to the enemy
+    @post   : Do all of the following:
+            : 1. If the enemy's buff stack is not empty, apply buff once and decrement the
+              turns. Any time a Buff's turns_ goes to zero, it is removed
+              from the stack. Print out the results of the action as described below.
+            : 2. Pick a random Action 
+                (one of BUFF_Heal, BUFF_MendMetal, ATT_Strike, ATT_ThrowTomato). 
+            : If the selected action is a buff, apply once immediately and add it to the 
+              enemy's buff stack, performing the necessary turns update. 
+              Print out the results of the action as described below.
+            : If the selected action is an attack, execute it against the main character.
+              Print out the results of the action as described below. 
+            : More details:
+            
+            : After applying each action, print out the results of the action as follows:
+            : [ENEMY NAME] used [ACTION NAME]!
+            : \n(ENEMY) [ENEMY NAME]: LEVEL [ENEMY LEVEL] [ENEMY RACE]. \nVITALITY: [ENEMY VITALITY] \nARMOR: [ENEMY ARMOR]\n 
+            : \n(YOU) [MAINCHARACTER NAME]: LEVEL [MAINCHARACTER LEVEL] [MAINCHARACTER RACE]. \nVITALITY: [MAINCHARACTER VITALITY] \nARMOR: [MAINCHARACTER ARMOR]\n
+*/
+  void Tavern::enemyTurn(Character * pEnemy)
+  {
+    Character * main = this->getMainCharacter();
+
+    if(!pEnemy->isBuffStackEmpty())
+    {
+      printTurnResults(pEnemy, main, pEnemy->applyBuff());
+    }
+
+    while(!pEnemy->isActionQueueEmpty())
+    {
+      printTurnResults(pEnemy, main, pEnemy->doAction(main));
+        
+
+      if(main->getVitality() <= 0)
+      {
+        break;
+      }
+    }
+
+    std::cout << "END OF ENEMY TURN" << std::endl;
+  }
