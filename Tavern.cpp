@@ -449,7 +449,7 @@ void Tavern::actionSelection()
   if(combat_queue_.empty() || this->getMainCharacter() == nullptr) return;
 
   Character * main = this->getMainCharacter();
-  Character * enemy = combat_queue_.front();
+  Character * enemy = this->getTarget();
 
   main->clearActionQueue();
 
@@ -530,7 +530,7 @@ void Tavern::actionSelection()
 void Tavern::turnResolution()
 {
   Character * main = this->getMainCharacter();
-  Character * enemy = combat_queue_.front();
+  Character * enemy = this->getTarget();
 
   if(!main->isBuffStackEmpty())
   {
@@ -553,7 +553,7 @@ void Tavern::turnResolution()
       //new enemy is the next guy at the front
       if(combat_queue_.empty()) break;
 
-      enemy = combat_queue_.front();
+      enemy = this->getTarget();
     }
   }
 
@@ -663,7 +663,7 @@ void Tavern::combat()
       break;
     }
     
-    enemyTurn(combat_queue_.front());
+    enemyTurn(this->getTarget());
     std::cout << std::endl;
 
     if(main_character_->getVitality() <= 0)
