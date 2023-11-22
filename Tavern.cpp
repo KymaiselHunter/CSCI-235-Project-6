@@ -608,13 +608,15 @@ void Tavern::printTurnResults(Character * pAttacker, Character * pVictim, std::s
 */
   void Tavern::enemyTurn(Character * pEnemy)
   {
+    std::cout << "ENEMY TURN" << std::endl;
     Character * main = this->getMainCharacter();
 
     //get time stuff for pseudo random
     srand(time(NULL));
 
     //add an action to the queue
-    pEnemy->addAction((int)(rand()%4));
+    int randAction = rand()%4;
+    pEnemy->addAction(randAction);
 
     if(!pEnemy->isBuffStackEmpty())
     {
@@ -652,6 +654,8 @@ void Tavern::combat()
     actionSelection();
     turnResolution();
     
+    std::cout << std::endl;
+
     if(combat_queue_.empty()) 
     {
       std::cout << "NO MORE ENEMIES" << std::endl;
@@ -659,6 +663,7 @@ void Tavern::combat()
     }
     
     enemyTurn(combat_queue_.front());
+    std::cout << std::endl;
 
     if(main_character_->getVitality() <= 0)
     {

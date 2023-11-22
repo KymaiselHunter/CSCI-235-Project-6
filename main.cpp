@@ -303,5 +303,5 @@ int main()
 
     // //actionQueueTestTavern->printCombatQueue();
     
-    
+    actionQueueTestTavern->combat();
 }

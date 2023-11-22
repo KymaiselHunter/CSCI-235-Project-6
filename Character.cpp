@@ -529,9 +529,11 @@ std::string Character::doAction(Character * pVictim)
         }
         else //elif mend mental
         {
-            newBuff.name_ = "MendMental";
+            newBuff.name_ = "MendMetal";
             newBuff.turns_ = 2;
         }
+
+        buff_stack_.push(newBuff);
 
         return applyBuff();
     }
