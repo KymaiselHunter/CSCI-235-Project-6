@@ -222,7 +222,7 @@ class Tavern : public ArrayBag<Character*>{
               :           - When a valid action is read, 
                           it is added to the main character's action queue.    
     */
-    void actionSelction();
+    void actionSelection();
 
     /**
         @post : If there are no actions in the main character's action queue, 
@@ -319,5 +319,13 @@ class Tavern : public ArrayBag<Character*>{
     //A combat queue of Character pointers, enemies that the main character must fight.
     std::queue<Character*> combat_queue_;
 
+    //===========================================================================
+    //task 2 modifications - helper functions
+    //===========================================================================
+    /**
+      @param  : two character pointer, one who attacks one who takes damage, then a string of the action used
+      @post   : prints the caction, the character doing the action, and the victim
+    */
+    void printTurnResults(Character * pAttacker, Character * pVictim, std::string pAction);
 };
 #endif

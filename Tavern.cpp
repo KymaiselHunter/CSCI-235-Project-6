@@ -443,7 +443,7 @@ void Tavern::printCombatQueue() const
           :           - When a valid action is read, 
                       it is added to the main character's action queue.    
 */
-void Tavern::actionSelction()
+void Tavern::actionSelection()
 {
   if(combat_queue_.empty() || this->getMainCharacter() == nullptr) return;
 
@@ -487,4 +487,80 @@ void Tavern::actionSelction()
       }
     } 
   }
+}
+
+/**
+    @post : If there are no actions in the main character's action queue, 
+            or there are no enemies in the combat queue, do nothing.
+            
+            Otherwise do all of the following:            
+            
+            1. If the Buff stack is not empty, apply the buff once and decrement the turns.
+                Any time a Buff's turns_ goes to zero, it is removed
+                from the stack. Print out the results of the action as described below.
+            2. While there are actions on the action queue:
+            - take the next action off the queue
+            - if the next action is  a buff, apply once and push it onto the buff stack after 
+              decrementing the turns. 
+              BUFF_Heal lasts for 3 turns in total, while BUFF_MendMetal lasts
+              for 2 turns in total. Print out the results of the action as described below.
+            - if the next action is an attack, execute it against the enemy at the front of
+              the combat queue. Print out the results of the action as described below. 
+              - if after this action there are no more enemies to fight, clear the action
+                queue and return.
+            3. Print "END OF TURN\n" 
+      
+        : More details:
+    
+        : After applying each action, print out the results of the action as follows:
+        : [MAINCHARACTER NAME] used [ACTION NAME]!
+        : \n(YOU) [MAINCHARACTER NAME]: LEVEL [MAINCHARACTER LEVEL] [MAINCHARACTER RACE]. \nVITALITY: [MAINCHARACTER VITALITY] \nARMOR: [MAINCHARACTER ARMOR]\n
+        : \n(ENEMY) [ENEMY NAME]: LEVEL [ENEMY LEVEL] [ENEMY RACE]. \nVITALITY: [ENEMY VITALITY] \nARMOR: [ENEMY ARMOR]\n 
+
+          Where [ACTION NAME] is one of [Heal, MendMetal, Strike, ThrowTomato]
+        
+        :   Whenever an enemy's vitality becomes <=0 after an attack, also print out 
+            "[CHARACTER NAME] DEFEATED\n" 
+            and remove the enemy from the combat queue AND let them exit the tavern. 
+            Then carry out the remaining actions, if any, against the next enemy on the
+            combat queue.
+      
+*/
+void Tavern::turnResolution()
+{
+  Character * main = this->getMainCharacter();
+  Character * enemy = combat_queue_.front();
+
+  if(!main->isBuffStackEmpty())
+  {
+    printTurnResults(main, enemy, main->applyBuff());
+  }
+
+  //while(!main->isActionQueueEmpty)
+}
+
+//helper to turn resolution
+/**
+  @param  : two character pointer, one who attacks one who takes damage, then a string of the action used
+  @post   : prints the caction, the character doing the action, and the victim
+*/
+void Tavern::printTurnResults(Character * pAttacker, Character * pVictim, std::string pAction)
+{
+  std::cout << pAttacker->getName() << " used " << pAction << "!" << std::endl;
+
+  std::string attackerName = "(YOU)";
+  std::string victimName = "(ENEMY)";
+
+  if(pAttacker != this->getMainCharacter())
+  {
+    attackerName = "(ENEMY)";
+    victimName =  "(YOU)";
+  }
+
+  std::cout << attackerName << " " << pAttacker->getName() <<" LEVEL "<< pAttacker->getLevel()<<" "<< pAttacker->getRace() <<
+  ". \nVITALITY: "<< pAttacker->getVitality() << "\nARMOR: "<<pAttacker->getArmor() <<"\n" << std::endl;
+
+  std::cout << victimName << " " << pVictim->getName() <<" LEVEL "<< pVictim->getLevel()<<" "<< pVictim->getRace() <<
+  ". \nVITALITY: "<< pVictim->getVitality() << "\nARMOR: "<<pVictim->getArmor() << "\n" << std::endl;
+
 }

@@ -191,7 +191,7 @@ class Character
             @pre: This function is called to execute the Action BUFF_MendMetal
             @post: Increases the character's armor by 2
         */
-        void mendMental();
+        void mendMetal();
 
 
         /** 
@@ -228,8 +228,6 @@ class Character
         */
         bool addAction(const int &pAction);
 
-        
-
         /**
             @param: reference to the buff being added
             @post: adds buff to the top of the buff_stack_
@@ -246,7 +244,7 @@ class Character
             @return: bool if actions was done, will be false when queue empty //may be removed
         */
         bool doAction();
-
+        
         //===========================================================================
         //task 2 modifications (while doing task 2)
         //===========================================================================
@@ -254,6 +252,23 @@ class Character
             @post: remove all  the actions in the action_queue_
         */
         void clearActionQueue();
+
+        /**
+            @pre: BuffStack is not empty //may be removed
+            @post: applies the buff and decrements a turn
+        */
+        std::string applyBuff();
+
+        /**
+            @return : bool if Buff stack is empty or not
+        */
+        bool isBuffStackEmpty();
+
+        /**
+            @return : bool if action_queue_ is empty
+        */
+        bool isActionQueueEmpty();
+
 
         //===========================================================================
         //Kyle's Test methods

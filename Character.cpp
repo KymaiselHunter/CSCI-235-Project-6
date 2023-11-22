@@ -298,7 +298,7 @@ void Character::heal()
     @pre: This function is called to execute the Action BUFF_MendMetal
     @post: Increases the character's armor by 2
 */
-void Character::mendMental()
+void Character::mendMetal()
 {
     this->setArmor(this->getArmor() + 2);
 }
@@ -442,4 +442,40 @@ void Character::clearActionQueue()
     {
         action_queue_.pop();
     }
+}
+
+/**
+    @pre: BuffStack is not empty
+    @post: applies the buff and decrements a turn
+    @return: string of the buff being applied
+*/
+std::string Character::applyBuff()
+{
+    if(buff_stack_.empty()) return "No Buff";
+
+    std::string buffName = buff_stack_.top().name_;
+
+    if(buff_stack_.top().name_ == "BUFF_Heal") this->heal();
+    else if(buff_stack_.top().name_ == "BUFF_MendMeta") this->mendMetal();
+
+    buff_stack_.top().turns_--;
+    if(buff_stack_.top().turns_ <= 0) buff_stack_.pop();
+
+    return buffName;
+}
+
+/**
+    @return : bool if Buff stack is empty or not
+*/
+bool Character::isBuffStackEmpty()
+{
+    return buff_stack_.empty();
+}
+
+/**
+    @return : bool if action_queue_ is empty
+*/
+bool Character::isActionQueueEmpty()
+{
+    return isActionQueueEmpty();
 }

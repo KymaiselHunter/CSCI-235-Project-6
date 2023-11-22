@@ -42,7 +42,7 @@ int main()
     cout << "\n"; 
 
     cout << "Action 1 mends mental, action 2 heals" << endl;
-    actionTestCharacter1->mendMental();
+    actionTestCharacter1->mendMetal();
     actionTestCharacter2->heal();
     actionsTestTavern->displayCharacters();
     cout << "\n"; 
@@ -58,60 +58,60 @@ int main()
     actionsTestTavern->displayCharacters();
     cout << "\n"; 
 
-    //test the task 1 stack and queue
-    std::cout << "===================================" << std::endl;
-    cout << "Test task 1 : stack and queue(by kyle)" << endl;
-    std::cout << "===================================" << std::endl;
-    //reuse previous characters
+    // //test the task 1 stack and queue
+    // std::cout << "===================================" << std::endl;
+    // cout << "Test task 1 : stack and queue(by kyle)" << endl;
+    // std::cout << "===================================" << std::endl;
+    // //reuse previous characters
 
-    actionTestCharacter1->addAction(3);
-    actionTestCharacter1->addAction(1);
-    actionTestCharacter1->addAction(3);
-    actionTestCharacter1->addAction(0);
-    actionTestCharacter1->addAction(2);
-    actionTestCharacter1->addAction(0);
+    // actionTestCharacter1->addAction(3);
+    // actionTestCharacter1->addAction(1);
+    // actionTestCharacter1->addAction(3);
+    // actionTestCharacter1->addAction(0);
+    // actionTestCharacter1->addAction(2);
+    // actionTestCharacter1->addAction(0);
 
-    //these should not be added
-    actionTestCharacter1->addAction(4);
-    actionTestCharacter1->addAction(-1);
+    // //these should not be added
+    // actionTestCharacter1->addAction(4);
+    // actionTestCharacter1->addAction(-1);
     
-    Buff testBuffOne;
-    testBuffOne.name_ = "Ballz";
-    testBuffOne.turns_ = 2;
+    // Buff testBuffOne;
+    // testBuffOne.name_ = "Ballz";
+    // testBuffOne.turns_ = 2;
 
-    Buff testBuffTwo;
-    testBuffTwo.name_ = "Deez";
-    testBuffTwo.turns_ = 3;
+    // Buff testBuffTwo;
+    // testBuffTwo.name_ = "Deez";
+    // testBuffTwo.turns_ = 3;
 
-    Buff testBuffThree;
-    testBuffThree.name_ = "Nuts";
-    testBuffThree.turns_ = 1;
+    // Buff testBuffThree;
+    // testBuffThree.name_ = "Nuts";
+    // testBuffThree.turns_ = 1;
 
-    actionTestCharacter2->addBuff(testBuffOne);
-    actionTestCharacter2->addBuff(testBuffTwo);
-    actionTestCharacter2->addBuff(testBuffThree);
+    // actionTestCharacter2->addBuff(testBuffOne);
+    // actionTestCharacter2->addBuff(testBuffTwo);
+    // actionTestCharacter2->addBuff(testBuffThree);
 
 
-    //enum Action {BUFF_Heal, BUFF_MendMental, ATT_Strike, ATT_ThrowTomato};
-    //              0           1               2           3
+    // //enum Action {BUFF_Heal, BUFF_MendMental, ATT_Strike, ATT_ThrowTomato};
+    // //              0           1               2           3
 
-    cout << "Action test" << endl;
-    actionTestCharacter1->printActionQueue();
-    cout << endl;
+    // cout << "Action test" << endl;
+    // actionTestCharacter1->printActionQueue();
+    // cout << endl;
 
-    cout << "buff test" << endl;
-    actionTestCharacter2->printBuffStack();
-    cout << endl;
+    // cout << "buff test" << endl;
+    // actionTestCharacter2->printBuffStack();
+    // cout << endl;
 
-    cout << "repeat test(make sure the stack and queue clone didnt mess up)" << endl;
+    // cout << "repeat test(make sure the stack and queue clone didnt mess up)" << endl;
 
-    cout << "Action test 2" << endl;
-    actionTestCharacter1->printActionQueue();
-    cout << endl;
+    // cout << "Action test 2" << endl;
+    // actionTestCharacter1->printActionQueue();
+    // cout << endl;
 
-    cout << "buff test 2" << endl;
-    actionTestCharacter2->printBuffStack();
-    cout << endl;
+    // cout << "buff test 2" << endl;
+    // actionTestCharacter2->printBuffStack();
+    // cout << endl;
 
 
     //===========================================================================
@@ -277,10 +277,23 @@ int main()
     actionQueueTestTavern->getMainCharacter()->display();
     cout << endl;
 
-    actionQueueTestTavern->actionSelction();
+    // actionQueueTestTavern->actionSelection();
 
-    cout << "\nCheck that the main character now has those actions" << endl;
-    actionQueueTestTavern->getMainCharacter()->printActionQueue();
+    // cout << "\nCheck that the main character now has those actions" << endl;
+    // actionQueueTestTavern->getMainCharacter()->printActionQueue();
+
+    //test that the buff is being done automatically
+    cout << "\nCheck that buffs are being done automatically" << endl;
+    combatTestCharacter->printBuffStack();
+
+    Buff testBuff;
+    testBuff.name_ = "BUFF_Heal";
+    testBuff.turns_ = 2;
+
+    combatTestCharacter->addBuff(testBuff);
+    combatTestCharacter->printBuffStack();
+
+    actionQueueTestTavern->turnResolution();
     
     
 }
