@@ -406,6 +406,7 @@ void Tavern::printCombatQueue() const
       temp.front()->combatDisplay();
 
       temp.pop();
+      std::cout << std::endl;
   }
   
   //std::cout << "End of Action Queue\n" << std::endl;
