@@ -634,3 +634,36 @@ void Tavern::printTurnResults(Character * pAttacker, Character * pVictim, std::s
 
     std::cout << "END OF ENEMY TURN" << std::endl;
   }
+
+  /**
+      @post : While the main character's vitality is > 0, and there are still enemies 
+                in the combat queue, do the following:
+            :     - Call actionSelection()
+                  - Call turnResolution()
+                  - Call enemyTurn() with a pointer to the first enemy on combat queue.
+
+            : If the main character's vitality has fallen to 0, print "YOU HAVE PERISHED."
+            : If there are no more enemies in the combat queue, print "NO MORE ENEMIES."
+*/
+void Tavern::combat()
+{
+  while(main_character_->getVitality() > 0 && !combat_queue_.empty())
+  {
+    actionSelection();
+    turnResolution();
+    
+    if(combat_queue_.empty()) 
+    {
+      std::cout << "NO MORE ENEMIES" << std::endl;
+      break;
+    }
+    
+    enemyTurn(combat_queue_.front());
+
+    if(main_character_->getVitality() <= 0)
+    {
+      std::cout << "YOU HAVE PERISHED" << std::endl;
+      break;
+    }
+  }
+}
