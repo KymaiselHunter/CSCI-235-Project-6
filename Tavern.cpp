@@ -582,6 +582,10 @@ void Tavern::printTurnResults(Character * pAttacker, Character * pVictim, std::s
 
 }
 
+//includes for random as enemy will have a random action
+#include <stdlib.h>
+#include <time.h> 
+
 /**
     @param  : A pointer to the enemy
     @post   : Do all of the following:
@@ -605,6 +609,12 @@ void Tavern::printTurnResults(Character * pAttacker, Character * pVictim, std::s
   void Tavern::enemyTurn(Character * pEnemy)
   {
     Character * main = this->getMainCharacter();
+
+    //get time stuff for pseudo random
+    srand(time(NULL));
+
+    //add an action to the queue
+    pEnemy->addAction((int)(rand()%4));
 
     if(!pEnemy->isBuffStackEmpty())
     {
