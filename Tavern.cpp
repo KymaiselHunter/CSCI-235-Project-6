@@ -558,6 +558,8 @@ void Tavern::turnResolution()
     }
   }
 
+  main->clearActionQueue();
+
   std::cout << "END OF YOUR TURN" << std::endl;
 }
 
