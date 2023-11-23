@@ -407,7 +407,7 @@ void Tavern::printCombatQueue() const
 
       temp.pop();
       //do i space?
-      std::cout << std::endl;
+      //std::cout << std::endl;
   }
   
   //std::cout << "End of Action Queue\n" << std::endl;
