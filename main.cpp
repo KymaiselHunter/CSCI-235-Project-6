@@ -227,9 +227,9 @@ int main()
     cout << "Level asscend" << endl;
     actionQueueTestTavern->createCombatQueue("LVLASC");
     //
-    cout << "Top: ";
-    actionQueueTestTavern->getTarget()->display();
-    cout << "\n" << endl; 
+    // cout << "Top: ";
+    // actionQueueTestTavern->getTarget()->display();
+    // cout << "\n" << endl; 
     //
     actionQueueTestTavern->printCombatQueue();
     cout << endl;
@@ -237,9 +237,9 @@ int main()
     cout << "Level descend" << endl;
     actionQueueTestTavern->createCombatQueue("LVLDES");
     //
-    cout << "Top: ";
-    actionQueueTestTavern->getTarget()->display();
-    cout << "\n" << endl; 
+    // cout << "Top: ";
+    // actionQueueTestTavern->getTarget()->display();
+    // cout << "\n" << endl; 
     //
     actionQueueTestTavern->printCombatQueue();
     cout << endl;
@@ -247,9 +247,9 @@ int main()
     cout << "HP asscend" << endl;
     actionQueueTestTavern->createCombatQueue("HPASC");
     //
-    cout << "Top: ";
-    actionQueueTestTavern->getTarget()->display();
-    cout << "\n" << endl; 
+    // cout << "Top: ";
+    // actionQueueTestTavern->getTarget()->display();
+    // cout << "\n" << endl; 
     //
     actionQueueTestTavern->printCombatQueue();
     cout << endl;
@@ -257,9 +257,9 @@ int main()
     cout << "HP descend" << endl;
     actionQueueTestTavern->createCombatQueue("HPDES");
     //
-    cout << "Top: ";
-    actionQueueTestTavern->getTarget()->display();
-    cout << "\n" << endl; 
+    // cout << "Top: ";
+    // actionQueueTestTavern->getTarget()->display();
+    // cout << "\n" << endl; 
     //
     actionQueueTestTavern->printCombatQueue();
     cout << endl;
@@ -303,5 +303,36 @@ int main()
 
     // //actionQueueTestTavern->printCombatQueue();
     
-    actionQueueTestTavern->combat();
+    //actionQueueTestTavern->combat();
+
+    std::cout << "===================================" << std::endl;
+    cout << "Debug : Create and print combatQueue" << endl;
+    std::cout << "===================================" << std::endl;
+
+    //test using the enemeis csv
+
+    Tavern * debugCombatQueueTavern = new Tavern("enemies.csv");
+
+    //check to see if the param construct worked
+    cout << "Original characters in this tavern" << endl;
+    debugCombatQueueTavern->displayCharacters();
+    cout << endl;
+
+
+
+    //now lets test creating the combat queue
+    //first lets print just to double check that it's empty
+    cout << "Combat Queue should be empty" << endl;
+    debugCombatQueueTavern->printCombatQueue();
+
+    std::cout << "===================================" << std::endl;
+    //now we create combat queue
+    cout << "Combat queue creation and default filter" << endl;
+
+    debugCombatQueueTavern->createCombatQueue();
+    debugCombatQueueTavern->printCombatQueue();
+
+    cout << "print the same queue again to make sure nothing has changed and the print isnt deleting the queue" << endl;
+    debugCombatQueueTavern->printCombatQueue();
+
 }

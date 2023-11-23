@@ -392,7 +392,7 @@ Character * Tavern::getTarget() const
 
 /**
   @post : Prints the details of each character in the combat queue in the following form:
-        : [ENEMY NAME]: LEVEL [ENEMY LEVEL] [ENEMY RACE]. \nVITALITY: [ENEMY VITALITY] \nARMOR: [ENEMY ARMOR]\n 
+        (ENEMY) [ENEMY NAME]: LEVEL [ENEMY LEVEL] [ENEMY RACE]. \nVITALITY: [ENEMY VITALITY] \nARMOR: [ENEMY ARMOR]\n 
 */
 void Tavern::printCombatQueue() const
 {
@@ -406,7 +406,8 @@ void Tavern::printCombatQueue() const
       temp.front()->combatDisplay();
 
       temp.pop();
-      std::cout << std::endl;
+      //do i space?
+      //std::cout << std::endl;
   }
   
   //std::cout << "End of Action Queue\n" << std::endl;
