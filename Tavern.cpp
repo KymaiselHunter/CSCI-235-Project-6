@@ -545,11 +545,11 @@ void Tavern::turnResolution()
 
     if(enemy->getVitality() <= 0)
     {
-      std::cout << enemy->getName() << " DEFEATED" << std::endl;
+      std::cout << enemy->getName() << " DEFEATED\n";
 
       //should i be deleting enemy before having them exit?
-      this->exitTavern(enemy);
       combat_queue_.pop();
+      this->exitTavern(enemy);
 
       //new enemy is the next guy at the front
       if(combat_queue_.empty()) break;
