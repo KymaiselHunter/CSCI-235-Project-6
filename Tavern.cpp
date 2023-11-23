@@ -530,6 +530,8 @@ void Tavern::actionSelection()
 */
 void Tavern::turnResolution()
 {
+  if(main_character_->isActionQueueEmpty() || combat_queue_.empty()) return;
+  
   Character * main = this->getMainCharacter();
   Character * enemy = this->getTarget();
 
