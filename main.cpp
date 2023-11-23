@@ -333,6 +333,7 @@ int main()
     debugCombatQueueTavern->printCombatQueue();
 
     cout << "print the same queue again to make sure nothing has changed and the print isnt deleting the queue" << endl;
+    debugCombatQueueTavern->createCombatQueue();
     debugCombatQueueTavern->printCombatQueue();
 
 }

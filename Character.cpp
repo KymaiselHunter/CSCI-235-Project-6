@@ -501,7 +501,7 @@ bool Character::isActionQueueEmpty() const
 */
 void Character::combatDisplay(bool pIsMain) const
 {
-    std::cout << (pIsMain ? "(You) " : "(ENEMY) ") << this->getName() <<" LEVEL "<< this->getLevel()<<" "<< this->getRace() <<
+    std::cout << (pIsMain ? "(You)" : "(ENEMY)") << this->getName() <<" LEVEL "<< this->getLevel()<<" "<< this->getRace() <<
     ". \nVITALITY: "<< this->getVitality() << "\nARMOR: "<<this->getArmor() << std::endl;
 }
 
