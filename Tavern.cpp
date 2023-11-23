@@ -538,7 +538,7 @@ void Tavern::turnResolution()
     printTurnResults(main, enemy, main->applyBuff());
   }
 
-  while(!main->isActionQueueEmpty())
+  while(!main->isActionQueueEmpty() && !combat_queue_.empty())
   {
     printTurnResults(main, enemy, main->doAction(enemy));
       
