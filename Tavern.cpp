@@ -662,7 +662,7 @@ void Tavern::combat()
 
     if(combat_queue_.empty()) 
     {
-      std::cout << "NO MORE ENEMIES" << std::endl;
+      std::cout << "NO MORE ENEMIES\n" << std::endl;
       break;
     }
     
@@ -671,7 +671,7 @@ void Tavern::combat()
 
     if(main_character_->getVitality() <= 0)
     {
-      std::cout << "YOU HAVE PERISHED" << std::endl;
+      std::cout << "YOU HAVE PERISHED\n" << std::endl;
       break;
     }
   }
