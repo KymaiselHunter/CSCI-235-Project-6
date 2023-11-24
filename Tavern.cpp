@@ -583,10 +583,7 @@ void Tavern::printTurnResults(Character * pAttacker, Character * pVictim, std::s
   }
 
   pAttacker->combatDisplay(mainAttack);
-  std::cout << std::endl;
   pVictim->combatDisplay(!mainAttack);
-  std::cout << std::endl;
-
 }
 
 //includes for random as enemy will have a random action
