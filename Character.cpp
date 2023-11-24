@@ -501,9 +501,15 @@ bool Character::isActionQueueEmpty() const
 */
 void Character::combatDisplay(bool pIsMain) const
 {
-    std::cout << (pIsMain ? "(You) " : "(ENEMY) ") << this->getName() <<" LEVEL "<< this->getLevel()<<" "<< this->getRace() <<
-    ". \nVITALITY: "<< this->getVitality() << "\nARMOR: "<<this->getArmor() << "\n";
+    std::cout << (pIsMain ? "(You) " : "(ENEMY) ") << this->getName() <<": LEVEL "<< this->getLevel()<<" "<< this->getRace() << "." << std::endl;
+    std::cout << "VITALITY: "<< this->getVitality() << "\nARMOR: "<<this->getArmor() << "\n" << std::endl;
 }
+
+/*
+std::cout << "YOUR TURN" << std::endl;
+  // std::cout << "(ENEMY) " << enemy->getName() << ": LEVEL " << enemy->getLevel() << " " << enemy->getRace() << "." << std::endl;
+  // std::cout << "VITALITY: " << enemy->getVitality() << "\nARMOR: " << enemy->getArmor() << "\n" << std::endl;
+*/
 
 /**
     @pre: actionQueue is not empty //may be removed

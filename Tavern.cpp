@@ -455,8 +455,9 @@ void Tavern::actionSelection()
   main->clearActionQueue();
 
   std::cout << "YOUR TURN" << std::endl;
-  std::cout << "(ENEMY) " << enemy->getName() << ": LEVEL " << enemy->getLevel() << " " << enemy->getRace() << "." << std::endl;
-  std::cout << "VITALITY: " << enemy->getVitality() << "\nARMOR: " << enemy->getArmor() << "\n" << std::endl;
+  enemy->combatDisplay();
+  // std::cout << "(ENEMY) " << enemy->getName() << ": LEVEL " << enemy->getLevel() << " " << enemy->getRace() << "." << std::endl;
+  // std::cout << "VITALITY: " << enemy->getVitality() << "\nARMOR: " << enemy->getArmor() << "\n" << std::endl;
 
   for(int i = 0; i < 3; i++)
   {
