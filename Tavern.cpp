@@ -675,4 +675,7 @@ void Tavern::combat()
       break;
     }
   }
+  
+  this->getMainCharacter()->clearActionQueue();
+  this->getTarget()->clearActionQueue();
 }
