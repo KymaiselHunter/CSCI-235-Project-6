@@ -665,14 +665,14 @@ void Tavern::combat()
 
   if(combat_queue_.empty()) 
   {
-    std::cout << "NO MORE ENEMIES\n" << std::endl;
+    std::cout << "NO MORE ENEMIES" << std::endl;
     main_character_->clearActionQueue();
     //break;
   }
 
   if(main_character_->getVitality() <= 0)
   {
-    std::cout << "YOU HAVE PERISHED\n" << std::endl;
+    std::cout << "YOU HAVE PERISHED" << std::endl;
     this->getTarget()->clearActionQueue();
     //this->main_character_->clearActionQueue();
     //break;
