@@ -554,7 +554,7 @@ void Tavern::turnResolution()
       this->exitTavern(enemy);
 
       //new enemy is the next guy at the front
-      if(combat_queue_.empty()) break;
+      if(combat_queue_.empty()) return;
 
       enemy = this->getTarget();
     }
@@ -639,7 +639,7 @@ void Tavern::printTurnResults(Character * pAttacker, Character * pVictim, std::s
       }
     }
 
-    std::cout << "END OF ENEMY TURN" << std::endl;
+    std::cout << "END OF ENEMY TURN\n" << std::endl;
   }
 
   /**
@@ -659,24 +659,22 @@ void Tavern::combat()
     actionSelection();
     turnResolution();
     
-    std::cout << std::endl;
+    if(this->getTarget() != nullptr) enemyTurn(this->getTarget());
+    //std::cout << std::endl;
+  }
 
-    if(combat_queue_.empty()) 
-    {
-      std::cout << "NO MORE ENEMIES\n" << std::endl;
-      main_character_->clearActionQueue();
-      break;
-    }
-    
-    enemyTurn(this->getTarget());
-    std::cout << std::endl;
+  if(combat_queue_.empty()) 
+  {
+    std::cout << "NO MORE ENEMIES\n" << std::endl;
+    main_character_->clearActionQueue();
+    //break;
+  }
 
-    if(main_character_->getVitality() <= 0)
-    {
-      std::cout << "YOU HAVE PERISHED\n" << std::endl;
-      this->getTarget()->clearActionQueue();
-      this->main_character_->clearActionQueue();
-      break;
-    }
+  if(main_character_->getVitality() <= 0)
+  {
+    std::cout << "YOU HAVE PERISHED\n" << std::endl;
+    this->getTarget()->clearActionQueue();
+    //this->main_character_->clearActionQueue();
+    //break;
   }
 }
