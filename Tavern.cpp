@@ -407,7 +407,7 @@ void Tavern::printCombatQueue() const
 
       temp.pop();
       //do i space?
-      //std::cout << std::endl;
+      std::cout << std::endl;
   }
   
   //std::cout << "End of Action Queue\n" << std::endl;
@@ -456,8 +456,7 @@ void Tavern::actionSelection()
 
   std::cout << "YOUR TURN" << std::endl;
   enemy->combatDisplay();
-  // std::cout << "(ENEMY) " << enemy->getName() << ": LEVEL " << enemy->getLevel() << " " << enemy->getRace() << "." << std::endl;
-  // std::cout << "VITALITY: " << enemy->getVitality() << "\nARMOR: " << enemy->getArmor() << "\n" << std::endl;
+  std::cout << std::endl;
 
   for(int i = 0; i < 3; i++)
   {
@@ -559,11 +558,12 @@ void Tavern::turnResolution()
 
       enemy = this->getTarget();
     }
+    std::cout << std::endl;
   }
 
   main->clearActionQueue();
 
-  std::cout << "END OF YOUR TURN" << std::endl;
+  std::cout << "END OF YOUR TURN\n" << std::endl;
 }
 
 //helper to turn resolution
@@ -583,6 +583,7 @@ void Tavern::printTurnResults(Character * pAttacker, Character * pVictim, std::s
   }
 
   pAttacker->combatDisplay(mainAttack);
+  std::cout << std::endl;
   pVictim->combatDisplay(!mainAttack);
 }
 
