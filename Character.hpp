@@ -4,7 +4,15 @@ Project 4 - Stew of the Day
 Georgina Woo
 June 29 2023
 Character.hpp declares the Character class along with its private and public members
+
+Modified By Kyle Bautista
+
 */
+
+//Name : Kyle Bautista
+//Instructor : Dr. Tiziana Ligorio
+//Project 6
+
 #ifndef CHARACTER_HPP_
 #define CHARACTER_HPP_
 #include <iostream>

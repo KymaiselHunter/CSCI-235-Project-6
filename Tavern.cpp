@@ -4,7 +4,15 @@ Project 3 - Tavern Class
 Georgina Woo
 June 20 2023
 Taven.cpp declares the Tavern class along with its private and public members
+
+Modified By Kyle Bautista
+
 */
+
+//Name : Kyle Bautista
+//Instructor : Dr. Tiziana Ligorio
+//Project 6
+
 #include "Tavern.hpp"
 
 /** Default Constructor **/

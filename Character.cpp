@@ -4,7 +4,14 @@ Project 4 - Stew of the Day
 Georgina Woo
 June 29 2023
 Character.cpp defines the constructors and private and public function implementation of the Character class
+
+Modified by Kyle Bautista
+
 */
+
+//Name : Kyle
+//Instructor : Dr. Tiziana Ligorio
+//Project 6
 
 #include "Character.hpp"
 
